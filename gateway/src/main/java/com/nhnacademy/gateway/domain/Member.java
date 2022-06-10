@@ -11,4 +11,5 @@ public class Member {
     private final String memberPassword;
     private final String memberEmail;
     private final MemberGrade memberGrade;
+    private final MemberState memberState;
 }

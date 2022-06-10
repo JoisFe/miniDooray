@@ -12,4 +12,6 @@ public interface MemberRespondDto {
     String getMemberGrade();
 
     String getMemberEmail();
+
+    String getMemberState();
 }

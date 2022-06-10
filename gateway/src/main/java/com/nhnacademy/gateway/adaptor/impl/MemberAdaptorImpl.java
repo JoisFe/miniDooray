@@ -1,8 +1,10 @@
 package com.nhnacademy.gateway.adaptor.impl;
 
+import com.nhnacademy.gateway.config.DomainProperties;
 import com.nhnacademy.gateway.domain.Member;
 import com.nhnacademy.gateway.adaptor.MemberAdaptor;
 import com.nhnacademy.gateway.dto.request.MemberRequestDto;
+import com.nhnacademy.gateway.dto.request.RegisterMemberRequestDto;
 import com.nhnacademy.gateway.exception.NotFoundMemberException;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +25,8 @@ public class MemberAdaptorImpl implements MemberAdaptor {
 
     private final HttpHeaders headers = new HttpHeaders();
 
+    private final DomainProperties domainProperties;
+
     @Override
     public Member findByUsername(String username) {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -30,7 +34,7 @@ public class MemberAdaptorImpl implements MemberAdaptor {
         HttpEntity<Member> httpEntity = new HttpEntity<>(headers);
 
         HttpEntity<Member> responds = restTemplate.exchange(
-            "http://localhost:8081/member?username={username}",
+            domainProperties.getAccountDomain() + "/member?username={username}",
             HttpMethod.GET,
             httpEntity,
             Member.class,
@@ -47,11 +51,10 @@ public class MemberAdaptorImpl implements MemberAdaptor {
         HttpEntity<Optional<Member>> httpEntity = new HttpEntity<>(headers);
 
         HttpEntity<Optional<Member>> responds = restTemplate.exchange(
-            "http://localhost:8081/member/exist?email={email}",
+            domainProperties.getAccountDomain() + "/member/exist?email={email}",
             HttpMethod.GET,
             httpEntity,
-            new ParameterizedTypeReference<Optional<Member>>() {
-            },
+            new ParameterizedTypeReference<Optional<Member>>() {},
             email
         );
 
@@ -59,13 +62,13 @@ public class MemberAdaptorImpl implements MemberAdaptor {
     }
 
     @Override
-    public String register(MemberRequestDto memberRequestDto) {
+    public String register(RegisterMemberRequestDto memberRequestDto) {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-        HttpEntity<MemberRequestDto> httpEntity = new HttpEntity<>(memberRequestDto, headers);
+        HttpEntity<MemberRequestDto> httpEntity = new HttpEntity(memberRequestDto, headers);
 
         HttpEntity<String> responds = restTemplate.exchange(
-            "http://localhost:8081/member/register",
+            domainProperties.getAccountDomain() + "/member/register",
             HttpMethod.POST,
             httpEntity,
             String.class

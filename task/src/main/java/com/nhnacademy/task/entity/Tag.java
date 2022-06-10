@@ -1,9 +1,11 @@
-package com.nhnacademy.account.entity;
+package com.nhnacademy.task.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,13 +16,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Member {
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberNum;
-    private String memberId;
-    private String memberPassword;
-    private String memberGrade;
-    private String memberEmail;
-    private String memberState;
+    private Long tagNum;
+
+    @ManyToOne
+    @JoinColumn(name = "task_num")
+    private Task task;
+
+    private String tatTitle;
+
 }

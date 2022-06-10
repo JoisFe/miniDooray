@@ -5,6 +5,7 @@ import com.nhnacademy.account.dto.respond.MemberRespondDto;
 import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.repository.MemberRepository;
 import com.nhnacademy.account.service.MemberService;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,15 @@ public class MemberServiceImpl implements MemberService {
             .memberPassword(memberRequestDto.getMemberPassword())
             .memberEmail(memberRequestDto.getMemberEmail())
             .memberGrade(memberRequestDto.getMemberGrade())
+            .memberState(memberRequestDto.getMemberState())
             .build();
 
-        memberRepository.save(member);
+        try {
+            memberRepository.save(member);
 
-        return "회원가입 되었습니다.";
+            return "회원가입 되었습니다.";
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

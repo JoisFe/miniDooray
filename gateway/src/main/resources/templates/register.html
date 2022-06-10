@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset=utf-8 http-equiv="Content-Type" content="text/html;">
     <title>회원가입</title>
 </head>
 <body>
@@ -14,6 +14,16 @@
 
 <h2>깃허브로 로그인하기</h2>
 <a href="https://github.com/login/oauth/authorize?client_id=8489289d0e3d656ad6f2&redirect_uri=http://localhost:8080/login/oauth2/code/github" class="btn btn-primary pull-right" role="button">깃허브로 로그인</a>
-
 </body>
+
+<script>
+    let errorMessage = "[[${error}]]"
+
+    window.onload = function() {
+        if (errorMessage !== "") {
+            console.log(errorMessage);
+            alert(errorMessage);
+        }
+    }
+</script>
 </html>
