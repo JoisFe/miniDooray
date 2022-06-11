@@ -12,5 +12,5 @@ public class Project {
 
     private final String projectDescription;
 
-    private final String projectState;
+    private final ProjectState projectState;
 }

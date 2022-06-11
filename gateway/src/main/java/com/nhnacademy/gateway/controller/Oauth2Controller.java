@@ -26,7 +26,7 @@ public class Oauth2Controller {
         SecurityUser securityUser = memberService.makeOAuthMemberByEmail(githubProfile.getEmail());
 
         HttpSession session = httpServletRequest.getSession();
-        session.setAttribute("resident", securityUser);
+        session.setAttribute("member", securityUser);
 
         // session에 securityUser를 담아야하나? 암호화 된 값이니 ㄱㅊ지 않나?
 

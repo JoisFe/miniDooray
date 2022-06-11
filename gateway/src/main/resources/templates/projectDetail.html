@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>프로젝트 이름</th>
+        <th>프로젝트 내용</th>
+        <th>프로젝트 상태</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${project.getProjectNum()}"></td>
+        <td th:text="${project.getProjectName()}"></td>
+        <td th:text="${project.getProjectDescription()}"></td>
+        <td th:text="${project.getProjectState()}">출생신고서</td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/task/create/${memberNum}|} + '\''">task를 등록해봐요</button>&nbsp;
+
+<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/member/register|} + '\''">프로젝트 멤버를 등록해봐요 ~~ !!</button>&nbsp;
+
+태그만드는 곳
+태그 선택하는 곳
+마일스톤 등록 수정 삭제 하는 곳
+
+
+태스크들 나열~~~~
+
+
+태스크 생성하기
+
+</body>
+</html>

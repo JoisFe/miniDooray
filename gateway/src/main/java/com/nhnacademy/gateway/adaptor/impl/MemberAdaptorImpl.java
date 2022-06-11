@@ -76,4 +76,20 @@ public class MemberAdaptorImpl implements MemberAdaptor {
 
         return responds.getBody();
     }
+
+    @Override
+    public List<Member> findAll() {
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<List<Member>> httpEntity = new HttpEntity<>(headers);
+
+        HttpEntity<List<Member>> responds = restTemplate.exchange(
+            domainProperties.getAccountDomain() + "/member/all",
+            HttpMethod.GET,
+            httpEntity,
+            new ParameterizedTypeReference<List<Member>>() {}
+        );
+
+        return responds.getBody();
+    }
 }

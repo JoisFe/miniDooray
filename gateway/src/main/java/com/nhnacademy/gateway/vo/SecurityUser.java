@@ -64,4 +64,6 @@ public class SecurityUser implements UserDetails {
     public String getMemberEmail() {
         return memberEmail;
     }
+
+
 }

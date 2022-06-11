@@ -13,16 +13,29 @@
     <tr>
         <th>번호</th>
         <th>프로젝트 이름</th>
-        <th>프로젝트 내용</th>
         <th>프로젝트 상태</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="project : ${projectList}">
-        <td th:text="${project.getProjectNum()}"></td>
-        <td th:text="${project.getProjectName()}"></td>
-        <td th:text="${project.getProjectDescription()}"></td>
-        <td th:text="${project.getProjectState()}">출생신고서</td>
+    <tr th:each="project : ${projectMemberList}">
+        <td th:text="${project.getProject().getProjectNum()}"></td>
+        <td style="text-decoration: underline;" th:text="${project.getProject().getProjectName()}"
+            th:onclick="'location.href=\''+ @{|/project/detail/${project.getProject().getProjectNum()}|} + '\''"></td>
+
+        <td th:text="${project.getProject().getProjectState()}"></td>
     </tr>
+    </tbody>
+</table>
+<button th:onclick="'location.href=\''+ @{|/project/create|} + '\''">프로젝트 생성해볼까요?</button>&nbsp;
 </body>
+
+<script>
+    let message = "[[${message}]]"
+
+    window.onload = function() {
+        if (message !== "") {
+            alert(message);
+        }
+    }
+</script>
 </html>

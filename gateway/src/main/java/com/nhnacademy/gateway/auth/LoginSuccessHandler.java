@@ -7,18 +7,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-    private final RedisTemplate<String, String> redisTemplate;
+//    private final RedisTemplate<String, String> redisTemplate;
 
-    public LoginSuccessHandler(RedisTemplate<String, String> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+//    public LoginSuccessHandler(RedisTemplate<String, String> redisTemplate) {
+//        this.redisTemplate = redisTemplate;
+//    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -31,12 +30,12 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
         HttpSession session = request.getSession(false);
 
-        redisTemplate.opsForHash().put(session.getId(), "username", userDetails.getUsername());
-        redisTemplate.opsForHash().put(session.getId(), "authority", authorities.get(0).getAuthority());
+//        redisTemplate.opsForHash().put(session.getId(), "username", userDetails.getUsername());
+//        redisTemplate.opsForHash().put(session.getId(), "authority", authorities.get(0).getAuthority());
 
         session.setAttribute("username", userDetails.getUsername());
         session.setAttribute("authority", authorities.get(0).getAuthority());
 
-        session.setAttribute("resident", userDetails);
+        session.setAttribute("member", userDetails);
     }
 }

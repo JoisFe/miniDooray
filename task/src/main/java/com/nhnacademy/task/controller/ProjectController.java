@@ -1,10 +1,15 @@
 package com.nhnacademy.task.controller;
 
+import com.nhnacademy.task.dto.request.ProjectRequestDto;
 import com.nhnacademy.task.dto.respond.ProjectRespondDto;
+import com.nhnacademy.task.service.ProjectMemberService;
 import com.nhnacademy.task.service.ProjectService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,8 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProjectController {
     private final ProjectService projectService;
 
-    @GetMapping("/project/projectList")
-    public List<ProjectRespondDto> getProjectList(@RequestParam(name = "page") int page) {
-        return projectService.getProjects(page);
+//    @GetMapping("/project")
+//    public List<ProjectRespondDto> getProjectList(@RequestParam(name = "page") int page) {
+//        return projectMemberService.getProjects(page);
+//    }
+
+    @PostMapping("/project/create/{memberNum}")
+    public ProjectRespondDto createProject(@RequestBody ProjectRequestDto projectRequestDto,
+                                           @PathVariable(name = "memberNum") Long memberNum) {
+        return projectService.makeProject(projectRequestDto, memberNum);
+    }
+
+    @GetMapping("/project/{projectNum}")
+    public ProjectRespondDto getProject(@PathVariable(name = "projectNum") Long projectNum) {
+        return projectService.getProjectByProjectNum(projectNum);
     }
 }

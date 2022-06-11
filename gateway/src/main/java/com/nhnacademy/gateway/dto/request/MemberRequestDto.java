@@ -9,6 +9,4 @@ public class MemberRequestDto {
     private String memberId;
     private String memberPassword;
     private String memberEmail;
-    private MemberGrade memberGrade;
-    private MemberState memberState;
 }

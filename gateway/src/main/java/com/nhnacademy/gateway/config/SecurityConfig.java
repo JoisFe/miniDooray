@@ -5,7 +5,6 @@ import com.nhnacademy.gateway.auth.LoginSuccessHandler;
 import com.nhnacademy.gateway.service.impl.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -42,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .passwordParameter("pwd")
             .loginPage("/auth/login")
             .loginProcessingUrl("/login")
+            .successHandler(loginSuccessHandler())
 //            .successHandler(loginSuccessHandler(null))
             .and()
 
@@ -86,6 +86,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        RedisTemplate<String, String> redisTemplate) {
 //        return new LoginSuccessHandler(redisTemplate);
 //    }
+
+    @Bean
+    public AuthenticationSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
+    }
 
 
 

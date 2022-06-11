@@ -59,10 +59,6 @@ public class MemberServiceImpl implements MemberService {
         registerMemberRequestDto.setMemberPassword(
             passwordEncoder.encode(registerMemberRequestDto.getMemberPassword()));
 
-        registerMemberRequestDto.setMemberGrade(MemberGrade.ROLE_USER);
-
-        registerMemberRequestDto.setMemberState(MemberState.MEMBER_MEMBERSHIP);
-
         return memberAdaptor.register(registerMemberRequestDto);
     }
 
@@ -84,6 +80,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean validCheck(BindingResult errors) {
         return errors.hasErrors();
+    }
+
+    @Override
+    public List<Member> findAllMember() {
+        return memberAdaptor.findAll();
     }
 
     public Map<String, String> validateHandling(Errors errors) {
