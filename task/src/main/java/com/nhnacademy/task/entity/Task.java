@@ -42,9 +42,5 @@ public class Task {
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     @JsonIgnore
-    private List<Tag> tags;
-
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
-    @JsonIgnore
     private List<Comment> comments;
 }

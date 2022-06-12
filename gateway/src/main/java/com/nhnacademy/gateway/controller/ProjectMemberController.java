@@ -33,7 +33,7 @@ public class ProjectMemberController {
     public String getProjectList(
         @RequestParam(name = "page", required = false, defaultValue = "0") int page, Model model,
         @ModelAttribute("member") SecurityUser member) {
-        List<ProjectMember> projectMembers =
+            List<ProjectMember> projectMembers =
             projectMemberService.findProjectList(member.getMemberNum(), page);
 
         model.addAttribute("projectMemberList", projectMembers);

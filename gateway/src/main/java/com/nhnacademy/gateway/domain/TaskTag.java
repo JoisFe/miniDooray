@@ -5,10 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class Tag {
-    private Long tagNum;
+public class TaskTag {
+    private TaskTagPk taskTagPk;
 
     private Project project;
 
-    private String tagTitle;
+    private Task task;
 }

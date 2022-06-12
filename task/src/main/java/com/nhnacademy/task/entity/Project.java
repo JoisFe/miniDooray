@@ -41,6 +41,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     @JsonIgnore
+    private List<Tag> tags;
 
+    @OneToMany(mappedBy = "project")
+    @JsonIgnore
     private List<Milestone> milestones;
 }

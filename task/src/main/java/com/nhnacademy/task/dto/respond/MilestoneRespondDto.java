@@ -1,17 +1,18 @@
 package com.nhnacademy.task.dto.respond;
 
 import com.nhnacademy.task.entity.Project;
+import com.nhnacademy.task.entity.Task;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
-@Builder
-@Data
 @AllArgsConstructor
-public class TagRespondDto {
-    private Long tagNum;
+@Data
+public class MilestoneRespondDto {
+    private Long milestoneNum;
 
     private Project project;
 
-    private String tagTitle;
+    private String milestoneTitle;
+
+    private Task task;
 }

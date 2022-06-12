@@ -5,28 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>태그 제목</th>
-        <th>수정</th>
-        <th>삭제</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="tag : ${tagList}">
-        <td th:text="${tag.getTagTitle()}"></td>
-        <td style="text-decoration: underline;"
-            th:onclick="'location.href=\''+ @{|/project/${projectNum}/task/${task.getTaskNum()}/tag/${tag.getTagNum()}/update|} + '\''">
-            수정
-        </td>
-        <td style="text-decoration: underline;"
-            th:onclick="'location.href=\''+ @{|/project/${projectNum}/task/${task.getTaskNum()}/tag/${tag.getTagNum()}/delete|} + '\''">
-            삭제
-        </td>
-    </tr>
-    </tbody>
-</table>
 <br><br>
 <table>
     <thead>
@@ -44,10 +22,6 @@
     </tr>
     </tbody>
 </table>
-
-<button th:onclick="'location.href=\''+ @{|/project/${task.getProject().getProjectNum()}/task/${task.getTaskNum()}/tag/register|} + '\''">
-    태그 등록
-</button>&nbsp;
 
 <br><br>
 

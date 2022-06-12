@@ -14,31 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class TagController {
     private final TagService tagService;
 
-    @GetMapping("/project/{projectNum}/task/{taskNum}/create")
+    @GetMapping("/project/{projectNum}/create")
     public String createTag(@PathVariable(value = "projectNum") Long projectNum,
-                            @PathVariable(value = "taskNum") Long taskNum,
                             @RequestParam(value = "tagTitle") String tagTitle) {
-        return tagService.createTag(projectNum, taskNum, tagTitle);
+        return tagService.createTag(projectNum, tagTitle);
     }
 
-    @GetMapping("/project/{projectNum}/task/{taskNum}/tag")
-    public List<TagRespondDto> findAllTag(@PathVariable(value = "projectNum") Long projectNum,
-                                          @PathVariable(value = "taskNum") Long taskNum) {
-        return tagService.findAllTag(projectNum, taskNum);
+    @GetMapping("/project/{projectNum}/tag")
+    public List<TagRespondDto> findAllTag(@PathVariable(value = "projectNum") Long projectNum) {
+        return tagService.findAllTag(projectNum);
     }
 
-    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/{tagNum}/register")
+    @GetMapping("/project/{projectNum}/tag/{tagNum}/register")
     public String updateTag(@PathVariable(value = "projectNum") Long projectNum,
-                            @PathVariable(value = "taskNum") Long taskNum,
                             @PathVariable(value = "tagNum") Long tagNum,
                             @RequestParam(value = "tagTitle") String tagTitle) {
-        return tagService.updateTag(projectNum, taskNum, tagNum, tagTitle);
+        return tagService.updateTag(projectNum, tagNum, tagTitle);
     }
 
-    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/{tagNum}/delete")
+    @GetMapping("/project/{projectNum}/tag/{tagNum}/delete")
     public String deleteTag(@PathVariable(value = "projectNum") Long projectNum,
-                            @PathVariable(value = "taskNum") Long taskNum,
                             @PathVariable(value = "tagNum") Long tagNum) {
-        return tagService.deleteTag(projectNum, taskNum, tagNum);
+        return tagService.deleteTag(projectNum, tagNum);
     }
 }

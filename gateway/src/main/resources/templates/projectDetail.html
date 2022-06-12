@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-
+<h1>프로젝트 상세페이지</h1>
 <table>
     <thead>
     <tr>
@@ -24,16 +24,7 @@
     </tr>
     </tbody>
 </table>
-<br><br>
-
-<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/task/create/${memberNum}|} + '\''">task를
-    등록해봐요
-</button>&nbsp;
-
-<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/member/register|} + '\''">프로젝트 멤버를 등록해봐요
-    ~~ !!
-</button>&nbsp;
-
+<br><br><br>
 
 <h1>task List</h1>
 <table>
@@ -62,8 +53,72 @@
     </tbody>
 </table>
 
+<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/task/create/${memberNum}|} + '\''">task를
+    등록해봐요
+</button>&nbsp;
 <br>
-마일스톤 등록 수정 삭제 하는 곳<br>
+<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/member/register|} + '\''">프로젝트 멤버를 등록해봐요
+    ~~ !!
+</button>&nbsp;
+<br><br><br>
+
+<table>
+    <thead>
+    <tr>
+        <th>태그 제목</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tag : ${tagList}">
+        <td th:text="${tag.getTagTitle()}"></td>
+        <td style="text-decoration: underline;"
+            th:onclick="'location.href=\''+ @{|/project/${projectNum}/tag/${tag.getTagNum()}/update|} + '\''">
+            수정
+        </td>
+        <td style="text-decoration: underline;"
+            th:onclick="'location.href=\''+ @{|/project/${projectNum}/tag/${tag.getTagNum()}/delete|} + '\''">
+            삭제
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<button th:onclick="'location.href=\''+ @{|/project/${projectNum}/tag/register|} + '\''">
+    태그 등록
+</button>&nbsp;
+<br>
+<br>
+
+<h1>마일스톤</h1>
+<table>
+    <thead>
+    <tr>
+        <th>마일스톤 제목</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="milestone : ${milestoneList}">
+        <td th:text="${milestone.getMilestoneTitle()}"></td>
+        <td style="text-decoration: underline;"
+            th:onclick="'location.href=\''+ @{|/project/${projectNum}/milestone/${milestone.getMilestoneNum()}/update|} + '\''">
+            수정
+        </td>
+        <td style="text-decoration: underline;"
+            th:onclick="'location.href=\''+ @{|/project/${projectNum}/milestone/${milestone.getMilestoneNum()}/delete|} + '\''">
+            삭제
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<button th:onclick="'location.href=\''+ @{|/project/${projectNum}/milestone/register|} + '\''">
+    마일스톤 등록
+</button>&nbsp;
+
 
 </body>
 

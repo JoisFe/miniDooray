@@ -4,11 +4,11 @@ import com.nhnacademy.task.dto.respond.TagRespondDto;
 import java.util.List;
 
 public interface TagService {
-    String createTag(Long projectNum, Long taskNum, String tagTitle);
+    String createTag(Long projectNum, String tagTitle);
 
-    List<TagRespondDto> findAllTag(Long projectNum, Long taskNum);
+    List<TagRespondDto> findAllTag(Long projectNum);
 
-    String updateTag(Long projectNum, Long taskNum, Long tagNum, String tagTitle);
+    String updateTag(Long projectNum, Long tagNum, String tagTitle);
 
-    String deleteTag(Long projectNum, Long taskNum, Long tagNum);
+    String deleteTag(Long projectNum, Long tagNum);
 }

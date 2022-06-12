@@ -13,22 +13,22 @@ public class TagServiceImpl implements TagService {
     private final TagAdaptor tagAdaptor;
 
     @Override
-    public String createTag(String tagTitle, Long projectNum, Long taskNum) {
-        return tagAdaptor.createTag(tagTitle, projectNum, taskNum);
+    public String createTag(String tagTitle, Long projectNum) {
+        return tagAdaptor.createTag(tagTitle, projectNum);
     }
 
     @Override
-    public List<Tag> getTaskAll(Long projectNum, Long taskNum) {
-        return tagAdaptor.findAllTag(projectNum, taskNum);
+    public List<Tag> getTaskAll(Long projectNum) {
+        return tagAdaptor.findAllTag(projectNum);
     }
 
     @Override
-    public String update(String tagTitle, Long projectNum, Long taskNum, Long tagNum) {
-        return tagAdaptor.update(tagTitle, projectNum, taskNum, tagNum);
+    public String update(String tagTitle, Long projectNum, Long tagNum) {
+        return tagAdaptor.update(tagTitle, projectNum, tagNum);
     }
 
     @Override
-    public String delete(Long projectNum, Long taskNum, Long tagNum) {
-        return tagAdaptor.delete(projectNum, taskNum, tagNum);
+    public String delete(Long projectNum, Long tagNum) {
+        return tagAdaptor.delete(projectNum, tagNum);
     }
 }

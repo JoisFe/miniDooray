@@ -61,10 +61,6 @@ public class TaskController {
         model.addAttribute("task", task);
         model.addAttribute("commentList", comments);
 
-        List<Tag> tags =
-            tagService.getTaskAll(projectNum, taskNum); // taskDetail에 해당 태스크 놈들에 대한 태그 뿌리기
-        model.addAttribute("tagList", tags);
-
 
         return "taskDetail";
     }

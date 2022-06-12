@@ -1,31 +1,32 @@
 package com.nhnacademy.task.entity;
 
+import com.nhnacademy.task.entity.pk.TaskTagPk;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @Entity
-public class Tag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagNum;
+public class TaskTag {
+    @EmbeddedId
+    private TaskTagPk taskTagPk;
 
+    @MapsId("tagNum")
     @ManyToOne
-    @JoinColumn(name = "project_num")
+    @JoinColumn(name = "tag_num")
     private Project project;
 
-    private String tagTitle;
+    @MapsId("taskNum")
+    @ManyToOne
+    @JoinColumn(name = "task_num")
+    private Task task;
 }

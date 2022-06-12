@@ -1,9 +1,13 @@
 package com.nhnacademy.gateway.controller;
 
+import com.nhnacademy.gateway.domain.Milestone;
 import com.nhnacademy.gateway.domain.Project;
+import com.nhnacademy.gateway.domain.Tag;
 import com.nhnacademy.gateway.domain.Task;
 import com.nhnacademy.gateway.dto.request.ProjectRequestDto;
+import com.nhnacademy.gateway.service.MilestoneService;
 import com.nhnacademy.gateway.service.ProjectService;
+import com.nhnacademy.gateway.service.TagService;
 import com.nhnacademy.gateway.service.TaskService;
 import com.nhnacademy.gateway.vo.SecurityUser;
 import java.util.List;
@@ -22,6 +26,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProjectController {
     private final ProjectService projectService;
     private final TaskService taskService;
+    private final TagService tagService;
+    private final MilestoneService milestoneService;
 
 //    @GetMapping("/projectList")
 //    public String getProjectList(
@@ -45,7 +51,8 @@ public class ProjectController {
 
     @PostMapping("/project/create")
     public String project(ProjectRequestDto projectRequestDto,
-                          @ModelAttribute("member") SecurityUser member) {
+                          @ModelAttribute("member") SecurityUser member, Model model) {
+//        model.addAttribute("projectNum", member.getMemberNum());
         projectService.createProject(projectRequestDto, member.getMemberNum());
 
         return "redirect:/projectList";
@@ -58,9 +65,17 @@ public class ProjectController {
 
         List<Task> tasks = taskService.getTaskAll(projectNum);
 
+        List<Tag> tags =
+            tagService.getTaskAll(projectNum); // taskDetail에 해당 태스크 놈들에 대한 태그 뿌리기
+
+        List<Milestone> mileStones =
+            milestoneService.getMilestoneAll(projectNum);
+
         model.addAttribute("memberNum", member.getMemberNum());
         model.addAttribute("project", project);
         model.addAttribute("taskList", tasks);
+        model.addAttribute("tagList", tags);
+        model.addAttribute("milestoneList", mileStones);
         return "projectDetail";
     }
 }

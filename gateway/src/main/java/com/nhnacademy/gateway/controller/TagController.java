@@ -13,51 +13,44 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class TagController {
     private final TagService tagService;
 
-    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/register")
+    @GetMapping("/project/{projectNum}/tag/register")
     public String createTagPage(@PathVariable(value = "projectNum") Long projectNum,
-                                @PathVariable(value = "taskNum") Long taskNum,
                                 Model model) {
         model.addAttribute("projectNum", projectNum);
-        model.addAttribute("taskNum", taskNum);
         return "tagCreate";
     }
 
-    @PostMapping("/project/{projectNum}/task/{taskNum}/tag/register")
+    @PostMapping("/project/{projectNum}/tag/register")
     public String createTag(String tagTitle,
-                            @PathVariable(value = "projectNum") Long projectNum,
-                            @PathVariable(value = "taskNum") Long taskNum) {
-        String message = tagService.createTag(tagTitle, projectNum, taskNum);
+                            @PathVariable(value = "projectNum") Long projectNum) {
+        String message = tagService.createTag(tagTitle, projectNum);
 
-        return "redirect:/project/" + projectNum + "/task/detail/" + taskNum;
+        return "redirect:/project/detail/" + projectNum;
     }
 
-    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/{tagNum}/update")
+    @GetMapping("/project/{projectNum}/tag/{tagNum}/update")
     public String updateTagPage(@PathVariable(value = "projectNum") Long projectNum,
-                                @PathVariable(value = "taskNum") Long taskNum,
                                 @PathVariable(value = "tagNum") Long tagNum, Model model) {
         model.addAttribute("projectNum", projectNum);
-        model.addAttribute("taskNum", taskNum);
         model.addAttribute("tagNum", tagNum);
 
         return "tagUpdate";
     }
 
-    @PostMapping("/project/{projectNum}/task/{taskNum}/tag/{tagNum}/update")
+    @PostMapping("/project/{projectNum}/tag/{tagNum}/update")
     public String updateTag(String tagTitle,
                             @PathVariable(value = "projectNum") Long projectNum,
-                            @PathVariable(value = "taskNum") Long taskNum,
                             @PathVariable(value = "tagNum") Long tagNum) {
-        String message = tagService.update(tagTitle, projectNum, taskNum, tagNum);
+        String message = tagService.update(tagTitle, projectNum, tagNum);
 
-        return "redirect:/project/" + projectNum + "/task/detail/" + taskNum;
+        return "redirect:/project/detail/" + projectNum;
     }
 
-    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/{tagNum}/delete")
+    @GetMapping("/project/{projectNum}/tag/{tagNum}/delete")
     public String deleteTag(@PathVariable(value = "projectNum") Long projectNum,
-                            @PathVariable(value = "taskNum") Long taskNum,
                             @PathVariable(value = "tagNum") Long tagNum) {
-        String message = tagService.delete(projectNum, taskNum, tagNum);
+        String message = tagService.delete(projectNum, tagNum);
 
-        return "redirect:/project/" + projectNum + "/task/detail/" + taskNum;
+        return "redirect:/project/detail/" + projectNum;
     }
 }
