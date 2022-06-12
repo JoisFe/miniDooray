@@ -2,7 +2,7 @@ package com.nhnacademy.gateway.config;
 
 
 import com.nhnacademy.gateway.auth.LoginSuccessHandler;
-import com.nhnacademy.gateway.service.impl.CustomUserDetailsService;
+import com.nhnacademy.gateway.service.impl.CustomUserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationProvider authenticationProvider(
-        CustomUserDetailsService customUserDetailsService) {
+        CustomUserDetailsServiceImpl customUserDetailsService) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(customUserDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());

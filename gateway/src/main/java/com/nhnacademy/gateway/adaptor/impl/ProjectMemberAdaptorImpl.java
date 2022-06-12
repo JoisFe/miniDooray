@@ -3,7 +3,10 @@ package com.nhnacademy.gateway.adaptor.impl;
 import com.nhnacademy.gateway.adaptor.ProjectMemberAdaptor;
 import com.nhnacademy.gateway.config.DomainProperties;
 import com.nhnacademy.gateway.domain.ProjectMember;
+import com.nhnacademy.gateway.exception.NotFoundProjectMemberException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -44,17 +47,17 @@ public class ProjectMemberAdaptorImpl implements ProjectMemberAdaptor {
     public ProjectMember findProjectAdministrator(Long projectNum) {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-        HttpEntity<ProjectMember> httpEntity = new HttpEntity<>(headers);
+        HttpEntity<Optional<ProjectMember>> httpEntity = new HttpEntity<>(headers);
 
-        HttpEntity<ProjectMember> responds = restTemplate.exchange(
+        HttpEntity<Optional<ProjectMember>> responds = restTemplate.exchange(
             domainProperties.getTaskDomain() + "/project/{projectNum}/member/administrator",
             HttpMethod.GET,
             httpEntity,
-            ProjectMember.class,
+            new ParameterizedTypeReference<Optional<ProjectMember>>() {},
             projectNum
         );
 
-        return responds.getBody();
+        return Objects.requireNonNull(responds.getBody()).orElseThrow(() -> new NotFoundProjectMemberException("해당 프로젝트의 멤버가 아닙니다."));
     }
 
     @Override

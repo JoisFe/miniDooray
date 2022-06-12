@@ -45,8 +45,8 @@ public class MemberServiceImpl implements MemberService {
 
         Authentication
             authentication =
-            new UsernamePasswordAuthenticationToken(member.getMemberEmail(),
-                member.getMemberPassword(), authorities);
+            new UsernamePasswordAuthenticationToken(securityUser.getUsername(),
+                securityUser.getPassword(), authorities);
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);

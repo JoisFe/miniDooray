@@ -1,9 +1,12 @@
 package com.nhnacademy.gateway.controller;
 
 import com.nhnacademy.gateway.domain.Project;
+import com.nhnacademy.gateway.domain.Task;
 import com.nhnacademy.gateway.dto.request.ProjectRequestDto;
 import com.nhnacademy.gateway.service.ProjectService;
+import com.nhnacademy.gateway.service.TaskService;
 import com.nhnacademy.gateway.vo.SecurityUser;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ProjectController {
     private final ProjectService projectService;
+    private final TaskService taskService;
 
 //    @GetMapping("/projectList")
 //    public String getProjectList(
@@ -30,7 +34,7 @@ public class ProjectController {
 
     @ModelAttribute("member")
     public SecurityUser getSessionMember(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession(false);
+        HttpSession session = httpServletRequest.getSession(true);
         return (SecurityUser) session.getAttribute("member");
     }
 
@@ -52,21 +56,11 @@ public class ProjectController {
                                 @ModelAttribute("member") SecurityUser member, Model model) {
         Project project = projectService.findProject(projectNum);
 
+        List<Task> tasks = taskService.getTaskAll(projectNum);
+
         model.addAttribute("memberNum", member.getMemberNum());
         model.addAttribute("project", project);
-
+        model.addAttribute("taskList", tasks);
         return "projectDetail";
     }
-
-    @GetMapping("/project/{projectNum}/task/create/{memberNum}")
-    public String taskCreatePage(@PathVariable(value = "projectNum") Long projectNum,
-                                 @PathVariable(value = "memberNum") Long memberNum, Model model) {
-        model.addAttribute("projectNum", projectNum);
-        model.addAttribute("memberNum", memberNum);
-
-        return "taskDetail";
-    }
-    //TODO : 여기서부터임!! projectNum은 필요한데 memberNum은 필요한가?
-    @PostMapping("/project/{projectNum}/task/create/{memberNum}")
-    public String taskCreate(@)
 }

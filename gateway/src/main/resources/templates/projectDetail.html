@@ -26,19 +26,55 @@
 </table>
 <br><br>
 
-<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/task/create/${memberNum}|} + '\''">task를 등록해봐요</button>&nbsp;
+<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/task/create/${memberNum}|} + '\''">task를
+    등록해봐요
+</button>&nbsp;
 
-<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/member/register|} + '\''">프로젝트 멤버를 등록해봐요 ~~ !!</button>&nbsp;
-
-태그만드는 곳
-태그 선택하는 곳
-마일스톤 등록 수정 삭제 하는 곳
-
-
-태스크들 나열~~~~
+<button th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/member/register|} + '\''">프로젝트 멤버를 등록해봐요
+    ~~ !!
+</button>&nbsp;
 
 
-태스크 생성하기
+<h1>task List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>업무 번호</th>
+        <th>업무 제목</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${taskList}">
+        <td th:text="${task.getTaskNum()}"></td>
+        <td style="text-decoration: underline;" th:text="${task.getTaskTitle()}"
+            th:onclick="'location.href=\''+ @{|/project/${task.getProject().getProjectNum()}/task/detail/${task.getTaskNum()}|} + '\''"></td>
+        <td style="text-decoration: underline;"
+            th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/task/${task.getTaskNum()}/update|} + '\''">
+            수정
+        </td>
+        <td style="text-decoration: underline;"
+            th:onclick="'location.href=\''+ @{|/project/${project.getProjectNum()}/task/${task.getTaskNum()}/delete|} + '\''">
+            삭제
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+마일스톤 등록 수정 삭제 하는 곳<br>
 
 </body>
+
+<script>
+    let message = "[[${message}]]"
+
+    console.log(message);
+    window.onload = function () {
+        if (message !== "") {
+            alert(message);
+        }
+    }
+</script>
 </html>

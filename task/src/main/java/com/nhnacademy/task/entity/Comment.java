@@ -10,11 +10,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class Comment {
     @Id
@@ -27,5 +29,5 @@ public class Comment {
 
     private String commentContent;
 
-    private Long writerNum;
+    private String writerId;
 }

@@ -5,6 +5,7 @@ import com.nhnacademy.task.dto.respond.ProjectRespondDto;
 import com.nhnacademy.task.entity.ProjectMember;
 import com.nhnacademy.task.service.ProjectMemberService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ public class ProjectMemberController {
     }
 
     @GetMapping("/project/{projectNum}/member/administrator")
-    public ProjectMemberRespondDto getProjectAdministrator(@PathVariable(name = "projectNum") Long projectNum) {
+    public Optional<ProjectMemberRespondDto> getProjectAdministrator(@PathVariable(name = "projectNum") Long projectNum) {
         return projectMemberService.getProjectAdministratorByProjectNum(projectNum);
     }
 

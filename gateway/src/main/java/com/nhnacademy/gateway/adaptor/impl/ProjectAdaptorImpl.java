@@ -4,7 +4,10 @@ import com.nhnacademy.gateway.adaptor.ProjectAdaptor;
 import com.nhnacademy.gateway.config.DomainProperties;
 import com.nhnacademy.gateway.domain.Project;
 import com.nhnacademy.gateway.dto.request.ProjectRequestDto;
+import com.nhnacademy.gateway.exception.NotFoundProjectException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -45,33 +48,33 @@ public class ProjectAdaptorImpl implements ProjectAdaptor {
         ProjectRequestDto projectRequestDto, Long memberNum) {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-        HttpEntity<Project> httpEntity = new HttpEntity(projectRequestDto, headers);
+        HttpEntity<Optional<Project>> httpEntity = new HttpEntity(projectRequestDto, headers);
 
-        HttpEntity<Project> responds = restTemplate.exchange(
+        HttpEntity<Optional<Project>> responds = restTemplate.exchange(
             domainProperties.getTaskDomain() + "/project/create/{memberNum}",
             HttpMethod.POST,
             httpEntity,
-            Project.class,
+            new ParameterizedTypeReference<Optional<Project>>() {},
             memberNum
         );
 
-        return responds.getBody();
+        return Objects.requireNonNull(responds.getBody()).orElseThrow(() -> new NotFoundProjectException("해당 프로젝트가 존재하지 않습니다."));
     }
 
     @Override
     public Project findProjectByProjectNum(Long projectNum) {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-        HttpEntity<Project> httpEntity = new HttpEntity<>(headers);
+        HttpEntity<Optional<Project>> httpEntity = new HttpEntity<>(headers);
 
-        HttpEntity<Project> responds = restTemplate.exchange(
+        HttpEntity<Optional<Project>> responds = restTemplate.exchange(
             domainProperties.getTaskDomain() + "/project/{projectNum}",
             HttpMethod.GET,
             httpEntity,
-            Project.class,
+            new ParameterizedTypeReference<Optional<Project>>() {},
             projectNum
         );
 
-        return responds.getBody();
+        return Objects.requireNonNull(responds.getBody()).orElseThrow(() -> new NotFoundProjectException("해당 프로젝트가 존재하지 않습니다."));
     }
 }

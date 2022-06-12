@@ -1,13 +1,17 @@
 package com.nhnacademy.account.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Builder
 @AllArgsConstructor
@@ -20,7 +24,9 @@ public class Member {
     private Long memberNum;
     private String memberId;
     private String memberPassword;
-    private String memberGrade;
     private String memberEmail;
-    private String memberState;
+    @Enumerated(EnumType.STRING)
+    private MemberGrade memberGrade;
+    @Enumerated(EnumType.STRING)
+    private MemberState memberState;
 }

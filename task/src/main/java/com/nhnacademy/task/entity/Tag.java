@@ -10,11 +10,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class Tag {
     @Id
@@ -25,6 +27,5 @@ public class Tag {
     @JoinColumn(name = "task_num")
     private Task task;
 
-    private String tatTitle;
-
+    private String tagTitle;
 }

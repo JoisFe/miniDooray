@@ -11,6 +11,7 @@ import com.nhnacademy.task.repository.ProjectMemberRepository;
 import com.nhnacademy.task.repository.ProjectRepository;
 import com.nhnacademy.task.service.ProjectService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectRespondDto makeProject(
+    public Optional<ProjectRespondDto> makeProject(
         ProjectRequestDto projectRequestDto, Long memberNum) {
         Project project = Project.builder()
             .projectName(projectRequestDto.getProjectName())
@@ -55,11 +56,15 @@ public class ProjectServiceImpl implements ProjectService {
 
         projectMemberRepository.save(projectMember);
 
-        return projectRepository.findByProjectNum(projectNum);
+        ProjectRespondDto projectRespondDto = projectRepository.findByProjectNum(projectNum);
+
+        return Optional.ofNullable(projectRespondDto);
     }
 
     @Override
-    public ProjectRespondDto getProjectByProjectNum(Long projectNum) {
-        return projectRepository.findByProjectNum(projectNum);
+    public Optional<ProjectRespondDto> getProjectByProjectNum(Long projectNum) {
+        ProjectRespondDto projectRespondDto = projectRepository.findByProjectNum(projectNum);
+
+        return Optional.ofNullable(projectRespondDto);
     }
 }

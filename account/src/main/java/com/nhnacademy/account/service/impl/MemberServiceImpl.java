@@ -3,12 +3,18 @@ package com.nhnacademy.account.service.impl;
 import com.nhnacademy.account.dto.request.MemberRequestDto;
 import com.nhnacademy.account.dto.respond.MemberRespondDto;
 import com.nhnacademy.account.entity.Member;
+import com.nhnacademy.account.entity.MemberGrade;
+import com.nhnacademy.account.entity.MemberState;
 import com.nhnacademy.account.repository.MemberRepository;
 import com.nhnacademy.account.service.MemberService;
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 @RequiredArgsConstructor
 @Service
@@ -31,16 +37,42 @@ public class MemberServiceImpl implements MemberService {
             .memberId(memberRequestDto.getMemberId())
             .memberPassword(memberRequestDto.getMemberPassword())
             .memberEmail(memberRequestDto.getMemberEmail())
-            .memberGrade(memberRequestDto.getMemberGrade())
-            .memberState(memberRequestDto.getMemberState())
+            .memberGrade(MemberGrade.ROLE_USER)
+            .memberState(MemberState.MEMBER_MEMBERSHIP)
             .build();
 
-        try {
-            memberRepository.save(member);
+        memberRepository.save(member);
 
-            return "회원가입 되었습니다.";
-        } catch (Exception e) {
-            return null;
+        return "회원가입 되었습니다.";
+    }
+
+    @Override
+    public boolean validCheck(BindingResult errors) {
+        return errors.hasErrors();
+    }
+
+    @Override
+    public String makeErrorMessage(BindingResult errors) {
+        Map<String, String> validatorResult = validateHandling(errors);
+        for (String key : validatorResult.keySet()) {
+            return validatorResult.get(key);
         }
+
+        return "";
+    }
+
+    @Override
+    public List<MemberRespondDto> findAllMember() {
+        return memberRepository.findAllBy();
+    }
+
+    private Map<String, String> validateHandling(BindingResult errors) {
+        Map<String, String> validatorResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+        return validatorResult;
     }
 }

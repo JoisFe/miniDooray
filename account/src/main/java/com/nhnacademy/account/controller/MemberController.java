@@ -2,12 +2,12 @@ package com.nhnacademy.account.controller;
 
 import com.nhnacademy.account.dto.request.MemberRequestDto;
 import com.nhnacademy.account.dto.respond.MemberRespondDto;
-import com.nhnacademy.account.entity.Member;
-import com.nhnacademy.account.exception.NotFoundMemberException;
 import com.nhnacademy.account.service.MemberService;
+import java.util.List;
 import java.util.Optional;
-import lombok.Getter;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +30,16 @@ public class MemberController {
     }
 
     @PostMapping("/member/register")
-    public String registerMember(@RequestBody MemberRequestDto memberRequestDto) {
+    public String registerMember(@RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult errors) {
+        if (memberService.validCheck(errors)) {
+            return memberService.makeErrorMessage(errors);
+        }
+
         return memberService.register(memberRequestDto);
+    }
+
+    @GetMapping("/member/all")
+    public List<MemberRespondDto> findAllMember() {
+        return memberService.findAllMember();
     }
 }
