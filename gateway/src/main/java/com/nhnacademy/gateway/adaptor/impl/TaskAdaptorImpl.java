@@ -2,7 +2,6 @@ package com.nhnacademy.gateway.adaptor.impl;
 
 import com.nhnacademy.gateway.adaptor.TaskAdaptor;
 import com.nhnacademy.gateway.config.DomainProperties;
-import com.nhnacademy.gateway.domain.Project;
 import com.nhnacademy.gateway.domain.Task;
 import com.nhnacademy.gateway.dto.request.TaskRequestDto;
 import com.nhnacademy.gateway.exception.NotFoundTaskException;
@@ -55,12 +54,14 @@ public class TaskAdaptorImpl implements TaskAdaptor {
             domainProperties.getTaskDomain() + "/project/{projectNum}/task/{taskNum}",
             HttpMethod.GET,
             httpEntity,
-            new ParameterizedTypeReference<Optional<Task>>() {},
+            new ParameterizedTypeReference<Optional<Task>>() {
+            },
             projectNum,
             taskNum
         );
 
-        return responds.getBody().orElseThrow(() -> new NotFoundTaskException("해당 태스크가 존재하지 않습니다."));
+        return responds.getBody()
+            .orElseThrow(() -> new NotFoundTaskException("해당 태스크가 존재하지 않습니다."));
     }
 
     @Override
@@ -73,7 +74,8 @@ public class TaskAdaptorImpl implements TaskAdaptor {
             domainProperties.getTaskDomain() + "/project/{projectNum}/task",
             HttpMethod.GET,
             httpEntity,
-            new ParameterizedTypeReference<List<Task>>() {},
+            new ParameterizedTypeReference<List<Task>>() {
+            },
             projectNum
         );
 
@@ -111,6 +113,46 @@ public class TaskAdaptorImpl implements TaskAdaptor {
             String.class,
             projectNum,
             taskNum
+        );
+
+        return responds.getBody();
+    }
+
+    @Override
+    public String registerMilestone(Long milestoneNum, Long projectNum, Long taskNum) {
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> httpEntity = new HttpEntity(headers);
+
+        HttpEntity<String> responds = restTemplate.exchange(
+            domainProperties.getTaskDomain() +
+                "/project/{projectNum}/task/{taskNum}/milestone/{milestoneNum}/register",
+            HttpMethod.GET,
+            httpEntity,
+            String.class,
+            projectNum,
+            taskNum,
+            milestoneNum
+        );
+
+        return responds.getBody();
+    }
+
+    @Override
+    public String registerTag(Long tagNum, Long projectNum, Long taskNum) {
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> httpEntity = new HttpEntity(headers);
+
+        HttpEntity<String> responds = restTemplate.exchange(
+            domainProperties.getTaskDomain() +
+                "/project/{projectNum}/task/{taskNum}/tag/{tagNum}/register",
+            HttpMethod.GET,
+            httpEntity,
+            String.class,
+            projectNum,
+            taskNum,
+            tagNum
         );
 
         return responds.getBody();

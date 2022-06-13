@@ -39,4 +39,16 @@ public class MilestoneController {
                             @PathVariable(value = "milestoneNum") Long milestoneNum) {
         return milestoneService.deleteTag(projectNum, milestoneNum);
     }
+
+    @GetMapping("/project/{projectNum}/task/{taskNum}/milestone/select")
+    public List<MilestoneRespondDto> getTagByProjectNum(@PathVariable(value = "projectNum") Long projectNum,
+                                                  @PathVariable(value = "taskNum") Long taskNum) {
+        return milestoneService.getMilestoneByProjectNum(projectNum, taskNum);
+    }
+
+    @GetMapping("/project/{projectNum}/task/{taskNum}/milestone")
+    public String getMilestoneInTask(@PathVariable(value = "projectNum") Long projectNum,
+                                                  @PathVariable(value = "taskNum") Long taskNum) {
+        return milestoneService.getMilestoneByTaskNum(projectNum, taskNum);
+    }
 }

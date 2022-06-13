@@ -1,6 +1,9 @@
 package com.nhnacademy.gateway.controller;
 
+import com.nhnacademy.gateway.domain.Milestone;
 import com.nhnacademy.gateway.service.MilestoneService;
+import com.nhnacademy.gateway.service.TaskService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class MilestoneController {
     private final MilestoneService milestoneService;
+    private final TaskService taskService;
 
     @GetMapping("/project/{projectNum}/milestone/register")
     public String createTagPage(@PathVariable(value = "projectNum") Long projectNum,
@@ -30,7 +34,8 @@ public class MilestoneController {
 
     @GetMapping("/project/{projectNum}/milestone/{milestoneNum}/update")
     public String updateTagPage(@PathVariable(value = "projectNum") Long projectNum,
-                                @PathVariable(value = "milestoneNum") Long milestoneNum, Model model) {
+                                @PathVariable(value = "milestoneNum") Long milestoneNum,
+                                Model model) {
         model.addAttribute("projectNum", projectNum);
         model.addAttribute("milestoneNum", milestoneNum);
 
@@ -52,5 +57,25 @@ public class MilestoneController {
         String message = milestoneService.delete(projectNum, milestoneNum);
 
         return "redirect:/project/detail/" + projectNum;
+    }
+
+    @GetMapping("/project/{projectNum}/task/{taskNum}/milestone/select")
+    public String selectMilestonePage(@PathVariable(value = "projectNum") Long projectNum,
+                                      @PathVariable(value = "taskNum") Long taskNum,
+                                      Model model) {
+        List<Milestone> milestones = milestoneService.getMilestoneInProject(projectNum, taskNum);
+        model.addAttribute("milestoneList", milestones);
+        return "milestoneSelect";
+    }
+
+    @PostMapping("/project/{projectNum}/task/{taskNum}/milestone/select")
+    public String selectMilestone(Long milestoneNum,
+                                  @PathVariable(value = "projectNum") Long projectNum,
+                                  @PathVariable(value = "taskNum") Long taskNum,
+                                  Model model) {
+        String message = taskService.registerMilestone(milestoneNum, projectNum, taskNum);
+
+        System.out.println(message);
+        return "redirect:/project/" + projectNum + "/task/detail/" + taskNum;
     }
 }

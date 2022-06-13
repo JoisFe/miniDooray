@@ -37,4 +37,10 @@ public class TagController {
                             @PathVariable(value = "tagNum") Long tagNum) {
         return tagService.deleteTag(projectNum, tagNum);
     }
+
+    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/select")
+    public List<TagRespondDto> getTagByProjectNum(@PathVariable(value = "projectNum") Long projectNum,
+                                                  @PathVariable(value = "taskNum") Long taskNum) {
+        return tagService.getTagByProjectNum(projectNum, taskNum);
+    }
 }

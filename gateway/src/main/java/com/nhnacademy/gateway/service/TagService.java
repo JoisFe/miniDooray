@@ -11,4 +11,7 @@ public interface TagService {
     String update(String tagTitle, Long projectNum, Long tagNum);
 
     String delete(Long projectNum, Long tagNum);
+
+    List<Tag> getTagInProject(Long projectNum, Long taskNum);
+
 }

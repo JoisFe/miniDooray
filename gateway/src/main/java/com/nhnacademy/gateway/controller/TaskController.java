@@ -1,12 +1,16 @@
 package com.nhnacademy.gateway.controller;
 
 import com.nhnacademy.gateway.domain.Comment;
+import com.nhnacademy.gateway.domain.Milestone;
 import com.nhnacademy.gateway.domain.Tag;
 import com.nhnacademy.gateway.domain.Task;
+import com.nhnacademy.gateway.domain.TaskTag;
 import com.nhnacademy.gateway.dto.request.TaskRequestDto;
 import com.nhnacademy.gateway.service.CommentService;
+import com.nhnacademy.gateway.service.MilestoneService;
 import com.nhnacademy.gateway.service.TagService;
 import com.nhnacademy.gateway.service.TaskService;
+import com.nhnacademy.gateway.service.TaskTagService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,8 @@ public class TaskController {
     private final TaskService taskService;
     private final TagService tagService;
     private final CommentService commentService;
+    private final TaskTagService taskTagService;
+    private final MilestoneService milestoneService;
 
     @PostMapping("/project/{projectNum}/task/create/{memberNum}")
     public String taskCreate(TaskRequestDto taskRequestDto,
@@ -54,12 +60,25 @@ public class TaskController {
 
         List<Comment> comments = commentService.getCommentList(projectNum, taskNum);
 
+        //
+        List<String> taskTagsTitle = taskTagService.getTaskTagList(projectNum, taskNum);
+
+        String milestoneTitle = milestoneService.getMilestoneInTask(projectNum, taskNum);
+
+
+        // Milestone milestone = milestoneService.getMilestoneInTask(projectNum, taskNum);
+
 //        if (task.getTaskNum() == null) {
 //            throw new NotFoundProjectException("해당 프로젝트가 존재하지 않습니다.");
 //        }
+
         model.addAttribute("projectNum", projectNum);
         model.addAttribute("task", task);
         model.addAttribute("commentList", comments);
+        model.addAttribute("taskTagTitle", taskTagsTitle);
+        model.addAttribute("milestoneTitle", milestoneTitle);
+
+
 
 
         return "taskDetail";
@@ -90,4 +109,23 @@ public class TaskController {
 
         return "redirect:/project/detail/" + projectNum;
     }
+
+    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/select")
+    public String selectTagPage(@PathVariable(value = "projectNum") Long projectNum,
+                                @PathVariable(value = "taskNum") Long taskNum, Model model) {
+        List<Tag> tags = tagService.getTagInProject(projectNum, taskNum);
+        model.addAttribute("tagList", tags);
+        return "tagSelect";
+    }
+
+    @PostMapping("/project/{projectNum}/task/{taskNum}/tag/select")
+    public String selectTag(Long tagNum,
+                            @PathVariable(value = "projectNum") Long projectNum,
+                            @PathVariable(value = "taskNum") Long taskNum, Model model) {
+
+        String message = taskTagService.registerTag(tagNum, projectNum, taskNum);
+
+        return "redirect:/project/" + projectNum + "/task/detail/" + taskNum;
+    }
+
 }

@@ -38,4 +38,14 @@ public class TaskServiceImpl implements TaskService {
     public String delete(Long projectNum, Long taskNum) {
         return taskAdaptor.deleteTask(projectNum, taskNum);
     }
+
+    @Override
+    public String registerMilestone(Long milestoneNum, Long projectNum, Long taskNum) {
+        return taskAdaptor.registerMilestone(milestoneNum, projectNum, taskNum);
+    }
+
+    @Override
+    public String registerTag(Long tagNum, Long projectNum, Long taskNum) {
+        return taskAdaptor.registerTag(tagNum, projectNum, taskNum);
+    }
 }

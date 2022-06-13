@@ -2,6 +2,7 @@ package com.nhnacademy.gateway.adaptor.impl;
 
 import com.nhnacademy.gateway.adaptor.TagAdaptor;
 import com.nhnacademy.gateway.config.DomainProperties;
+import com.nhnacademy.gateway.domain.Milestone;
 import com.nhnacademy.gateway.domain.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -93,6 +94,26 @@ public class TagAdaptorImpl implements TagAdaptor {
             String.class,
             projectNum,
             tagNum
+        );
+
+        return responds.getBody();
+    }
+
+    @Override
+    public List<Tag> findTagByProjectNum(Long projectNum, Long taskNum) {
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<List<Tag>> httpEntity = new HttpEntity<>(headers);
+
+        HttpEntity<List<Tag>> responds = restTemplate.exchange(
+            domainProperties.getTaskDomain() +
+                "/project/{projectNum}/task/{taskNum}/tag/select",
+            HttpMethod.GET,
+            httpEntity,
+            new ParameterizedTypeReference<List<Tag>>() {
+            },
+            projectNum,
+            taskNum
         );
 
         return responds.getBody();

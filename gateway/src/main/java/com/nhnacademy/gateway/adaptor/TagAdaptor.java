@@ -11,4 +11,6 @@ public interface TagAdaptor {
     String update(String tagTitle, Long projectNum, Long tagNum);
 
     String delete(Long projectNum, Long tagNum);
+
+    List<Tag> findTagByProjectNum(Long projectNum, Long taskNum);
 }

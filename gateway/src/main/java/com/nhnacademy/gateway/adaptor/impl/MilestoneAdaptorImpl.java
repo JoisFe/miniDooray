@@ -3,7 +3,7 @@ package com.nhnacademy.gateway.adaptor.impl;
 import com.nhnacademy.gateway.adaptor.MilestoneAdaptor;
 import com.nhnacademy.gateway.config.DomainProperties;
 import com.nhnacademy.gateway.domain.Milestone;
-import com.nhnacademy.gateway.domain.Tag;
+import com.nhnacademy.gateway.domain.TaskTag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -94,6 +94,44 @@ public class MilestoneAdaptorImpl implements MilestoneAdaptor {
             String.class,
             projectNum,
             milestoneNum
+        );
+
+        return responds.getBody();
+    }
+
+    @Override
+    public List<Milestone> findMilestoneByProjectNum(Long projectNum, Long taskNum) {
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<List<Milestone>> httpEntity = new HttpEntity<>(headers);
+
+        HttpEntity<List<Milestone>> responds = restTemplate.exchange(
+            domainProperties.getTaskDomain() +
+                "/project/{projectNum}/task/{taskNum}/milestone/select",
+            HttpMethod.GET,
+            httpEntity,
+            new ParameterizedTypeReference<List<Milestone>>() {
+            },
+            projectNum,
+            taskNum
+        );
+
+        return responds.getBody();
+    }
+
+    @Override
+    public String findMilestoneByTaskNum(Long projectNum, Long taskNum) {
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        HttpEntity<String> responds = restTemplate.exchange(
+            domainProperties.getTaskDomain() + "/project/{projectNum}/task/{taskNum}/milestone",
+            HttpMethod.GET,
+            httpEntity,
+            String.class,
+            projectNum,
+            taskNum
         );
 
         return responds.getBody();

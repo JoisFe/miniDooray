@@ -23,7 +23,7 @@ public class TaskTag {
     @MapsId("tagNum")
     @ManyToOne
     @JoinColumn(name = "tag_num")
-    private Project project;
+    private Tag tag;
 
     @MapsId("taskNum")
     @ManyToOne

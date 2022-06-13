@@ -6,6 +6,47 @@
 </head>
 <body>
 <br><br>
+<h1>task 상세페이지</h1>
+<button th:onclick="'location.href=\''+ @{|/project/${projectNum}/task/${task.getTaskNum()}/tag/select|} + '\''">
+    태그 선택
+</button>&nbsp;
+<br>
+<button th:onclick="'location.href=\''+ @{|/project/${projectNum}/task/${task.getTaskNum()}/milestone/select|} + '\''">
+    마일스톤 선택
+</button>&nbsp;
+<br>
+<br>
+<br>
+<h1>해당 태스크의 태그리스트</h1>
+<table>
+    <thead>
+    <tr>
+        <th>태그 제목</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="title : ${taskTagTitle}">
+        <td th:text="${title}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+<h1>해당 태스크의 마일스톤</h1>
+<table>
+    <thead>
+    <tr>
+        <th>마일스톤 제목</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${milestoneTitle}"></td>
+
+    </tr>
+    </tbody>
+</table>
+<br><br>
+<h1>해당 task</h1>
 <table>
     <thead>
     <tr>

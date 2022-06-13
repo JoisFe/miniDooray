@@ -31,4 +31,10 @@ public class TagServiceImpl implements TagService {
     public String delete(Long projectNum, Long tagNum) {
         return tagAdaptor.delete(projectNum, tagNum);
     }
+
+    @Override
+    public List<Tag> getTagInProject(Long projectNum, Long taskNum) {
+        return tagAdaptor.findTagByProjectNum(projectNum, taskNum);
+    }
+
 }

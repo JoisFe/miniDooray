@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public class TaskTag {
     private TaskTagPk taskTagPk;
 
-    private Project project;
+    private Tag Tag;
 
     private Task task;
 }

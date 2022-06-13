@@ -1,7 +1,6 @@
 package com.nhnacademy.gateway.adaptor;
 
 import com.nhnacademy.gateway.domain.Milestone;
-import com.nhnacademy.gateway.domain.Tag;
 import java.util.List;
 
 public interface MilestoneAdaptor {
@@ -12,4 +11,8 @@ public interface MilestoneAdaptor {
     String update(String milestoneTitle, Long projectNum, Long milestoneNum);
 
     String delete(Long projectNum, Long milestoneNum);
+
+    List<Milestone> findMilestoneByProjectNum(Long projectNum, Long taskNum);
+
+    String findMilestoneByTaskNum(Long projectNum, Long taskNum);
 }

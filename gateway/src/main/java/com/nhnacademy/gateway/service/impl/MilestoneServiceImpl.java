@@ -30,4 +30,14 @@ public class MilestoneServiceImpl implements MilestoneService {
     public List<Milestone> getMilestoneAll(Long projectNum) {
         return milestoneAdaptor.findAllMilestone(projectNum);
     }
+
+    @Override
+    public List<Milestone> getMilestoneInProject(Long projectNum, Long taskNum) {
+        return milestoneAdaptor.findMilestoneByProjectNum(projectNum, taskNum);
+    }
+
+    @Override
+    public String getMilestoneInTask(Long projectNum, Long taskNum) {
+        return milestoneAdaptor.findMilestoneByTaskNum(projectNum, taskNum);
+    }
 }

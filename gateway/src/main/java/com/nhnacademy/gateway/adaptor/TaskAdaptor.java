@@ -15,4 +15,8 @@ public interface TaskAdaptor {
     String updateTask(TaskRequestDto taskRequestDto, Long projectNum, Long taskNum);
 
     String deleteTask(Long projectNum, Long taskNum);
+
+    String registerMilestone(Long milestoneNum, Long projectNum, Long taskNum);
+
+    String registerTag(Long tagNum, Long projectNum, Long taskNum);
 }

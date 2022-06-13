@@ -50,4 +50,18 @@ public class TaskController {
                              @PathVariable(value = "taskNum") Long taskNum) {
         return taskService.deleteTask(projectNum, taskNum);
     }
+
+    @GetMapping("/project/{projectNum}/task/{taskNum}/milestone/{milestoneNum}/register")
+    public String registerMilestone(@PathVariable(value = "projectNum") Long projectNum,
+                                    @PathVariable(value = "taskNum") Long taskNum,
+                                    @PathVariable(value = "milestoneNum") Long milestoneNum) {
+        return taskService.registerMilestone(projectNum, taskNum, milestoneNum);
+    }
+
+    @GetMapping("/project/{projectNum}/task/{taskNum}/tag/{tagNum}/tastTag/register")
+    public String registerTag(@PathVariable(value = "projectNum") Long projectNum,
+                              @PathVariable(value = "taskNum") Long taskNum,
+                              @PathVariable(value = "tagNum") Long tagNum) {
+        return taskService.registerTag(projectNum, taskNum, tagNum);
+    }
 }

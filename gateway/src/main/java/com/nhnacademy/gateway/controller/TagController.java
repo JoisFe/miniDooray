@@ -1,6 +1,9 @@
 package com.nhnacademy.gateway.controller;
 
+import com.nhnacademy.gateway.domain.Tag;
 import com.nhnacademy.gateway.service.TagService;
+import com.nhnacademy.gateway.service.TaskService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class TagController {
     private final TagService tagService;
+    private final TaskService taskService;
 
     @GetMapping("/project/{projectNum}/tag/register")
     public String createTagPage(@PathVariable(value = "projectNum") Long projectNum,
@@ -53,4 +57,5 @@ public class TagController {
 
         return "redirect:/project/detail/" + projectNum;
     }
+
 }

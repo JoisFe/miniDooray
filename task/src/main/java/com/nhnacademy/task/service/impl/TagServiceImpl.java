@@ -66,4 +66,11 @@ public class TagServiceImpl implements TagService {
 
         return "해당 태그가 삭제되었습니다.";
     }
+
+    @Override
+    public List<TagRespondDto> getTagByProjectNum(Long projectNum, Long taskNum) {
+        Project project = projectRepository.findById(projectNum)
+            .orElseThrow(() -> new RuntimeException("해당 프로젝트가 존재하지 않습니다."));
+        return tagRepository.findByProject(project);
+    }
 }

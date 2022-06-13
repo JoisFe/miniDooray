@@ -15,4 +15,8 @@ public interface TaskService {
     String update(TaskRequestDto taskRequestDto, Long projectNum, Long taskNum);
 
     String delete(Long projectNum, Long taskNum);
+
+    String registerMilestone(Long milestoneNum, Long projectNum, Long taskNum);
+
+    String registerTag(Long tagNum, Long projectNum, Long taskNum);
 }
